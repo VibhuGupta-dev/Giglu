@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    /* Core Settings */
+    "target": "ES2022",                          /* Modern JavaScript standard target */
+    "module": "NodeNext",                        /* Best for modern Node.js module resolution */
+    "moduleResolution": "NodeNext",
+    
+    /* Emit Control */
+    "noEmit": true,                              /* Type check code only; do not output JavaScript files */
+
+    /* Strictness & Safety */
+    "strict": true,                              /* Enable all strict type-checking options */
+    "noImplicitAny": true,                       /* Error on expressions and declarations with an implied 'any' type */
+    "strictNullChecks": true,                    /* Enable strict null checks */
+    "alwaysStrict": true,                        /* Parse in strict mode and emit "use strict" for each source file */
+    
+    /* Additional Checks */
+    "noUnusedLocals": true,                      /* Report errors on unused local variables */
+    "noUnusedParameters": true,                  /* Report errors on unused parameters */
+    "noImplicitReturns": true,                   /* Report error when not all code paths in function return a value */
+    "noFallthroughCasesInSwitch": true,           /* Report errors for fallthrough cases in switch statement */
+
+    /* Compatibility */
+    "esModuleInterop": true,                      /* Emits additional JavaScript to ease importing CommonJS modules */
+    "forceConsistentCasingInFileNames": true,    /* Ensure correct casing in imports */
+    "skipLibCheck": true                         /* Skip type checking of declaration files (.d.ts) */
+  },
+  "include": ["**/*.ts"],                        /* Check TypeScript files throughout the Server directory */
+  "exclude": ["node_modules"]                    /* Ignore node_modules */
+}
