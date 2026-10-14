@@ -1,0 +1,119 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+out/
+lib/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+*.d.ts.map
+
+# Test results and coverage
+coverage/
+.nyc_output/
+junit.xml
+test-results/
+playwright-report/
+
+# Cache
+.cache/
+.npm/
+.eslintcache
+.stylelintcache
+.parcel-cache/
+.turbo/
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Temporary files
+tmp/
+temp/
+.temp/
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Runtime files
+pids/
+*.pid
+*.pid.lock
+*.seed
+
+# Debug files
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# IDE and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Operating system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Serverless and deployment
+.serverless/
+.vercel/
+.netlify/
+
+# Local databases and data
+*.sqlite
+*.sqlite3
+*.db
+
+# Certificates and private keys
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+
+# Environment-specific files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Optional package manager files
+.pnpm-store/
+
+# Generated documentation
+docs/api/
+
+# Miscellaneous
+*.bak
+*.orig
+*.rej

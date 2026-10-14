@@ -4,6 +4,7 @@ dotenv.config()
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import connectDB from "./config/MongoConnect.js"
+import Authroutes from "./routes/Authroutes.js"
 
 const CLIENTURI = process.env.CLIENTURI
 const app=express()
@@ -19,8 +20,12 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
 
+app.get("/" , (_req, res) => {
+  res.send({message : "server is running"})
+})
+
+app.use("/user" , Authroutes)
 
 app.listen(PORT,()=>{
     console.log(`App is running on ${PORT}`)
 })
-
