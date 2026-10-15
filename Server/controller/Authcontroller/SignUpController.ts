@@ -10,7 +10,7 @@ interface userData extends User {
 export async function SignUp(req: Request, res: Response) {
   try {
     const { name, email, password, confirmPassword }: userData = req.body;
-
+   console.log(name)
     if (!email || !name || !password || !confirmPassword) {
       return res.status(400).json({ message: "All fields must be filled" });
     }
