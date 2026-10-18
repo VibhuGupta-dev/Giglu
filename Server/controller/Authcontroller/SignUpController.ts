@@ -10,11 +10,13 @@ interface userData extends User {
 export async function SignUp(req: Request, res: Response) {
   try {
     const { name, email, password, confirmPassword }: userData = req.body;
-   console.log(name)
-    if (!email || !name || !password || !confirmPassword) {
+
+    if (!name || !email || !password || !confirmPassword) {
       return res.status(400).json({ message: "All fields must be filled" });
     }
+
     if (
+      typeof name !== "string" ||
       typeof email !== "string" ||
       typeof password !== "string" ||
       typeof confirmPassword !== "string"
@@ -24,7 +26,14 @@ export async function SignUp(req: Request, res: Response) {
       });
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    const normalizedName = name.trim();
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (!normalizedName) {
+      return res.status(400).json({ message: "Name is required" });
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
       return res.status(400).json({
         message: "Invalid email format",
       });
@@ -36,20 +45,27 @@ export async function SignUp(req: Request, res: Response) {
       });
     }
 
-    const checkemail = await userModel.findOne({ email });
-    if (checkemail) {
-      return res.status(403).json({ message: "Email already exist" });
-    }
-
     if (password !== confirmPassword) {
       return res.status(403).json({ message: "Password doesnt match" });
+    }
+
+    const ACCESS_JWT = process.env.ACCESS_JWT;
+    const REFRESH_JWT = process.env.REFRESH_JWT;
+
+    if (!ACCESS_JWT || !REFRESH_JWT) {
+      throw new Error("JWT secrets are missing in environment variables");
+    }
+
+    const checkemail = await userModel.findOne({ email: normalizedEmail });
+    if (checkemail) {
+      return res.status(403).json({ message: "Email already exist" });
     }
 
     const hash = await bcrypt.hash(password, 10);
 
     const createUser = await userModel.create({
-      name,
-      email,
+      name: normalizedName,
+      email: normalizedEmail,
       password: hash,
     });
 
@@ -58,8 +74,6 @@ export async function SignUp(req: Request, res: Response) {
         .status(400)
         .json({ message: "Cant create User at the moment" });
     }
-    const ACCESS_JWT: string = process.env.ACCESS_JWT as string;
-    const REFRESH_JWT: string = process.env.REFRESH_JWT as string;
 
     const accesstoken = jwt.sign(
       { id: createUser._id.toString() },
@@ -72,14 +86,12 @@ export async function SignUp(req: Request, res: Response) {
       { expiresIn: "7d" },
     );
 
-    if (!ACCESS_JWT || !REFRESH_JWT) {
-      throw new Error("JWT secrets are missing in environment variables");
-    }
     res.cookie("AccessToken", accesstoken, {
       sameSite: "strict",
       maxAge: 15 * 60 * 1000,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
+      path: "/",
     });
 
     res.cookie("RefreshToken", refreshtoken, {
@@ -87,13 +99,14 @@ export async function SignUp(req: Request, res: Response) {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
+      path: "/",
     });
 
     return res.status(201).json({
       message: "User Created Successfully",
       user: {
-        email: createUser?.email,
-        userId: createUser?._id,
+        email: createUser.email,
+        userId: createUser._id,
       },
     });
   } catch (err) {
