@@ -1,5 +1,5 @@
 import { Homepage } from "./Pages/HomePage";
-
+import { Routes, Route } from "react-router-dom";
 function App() {
   
 
@@ -7,7 +7,9 @@ function App() {
 
   return (
     <>
-    <Homepage />
+    <Routes>
+    <Route path="/" element= { <Homepage /> } />
+    </Routes>
     </>
   );
 }
