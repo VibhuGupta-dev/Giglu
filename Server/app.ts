@@ -5,6 +5,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import connectDB from "./config/MongoConnect.js"
 import Authroutes from "./routes/Authroutes.js"
+import Gigrotes from "./routes/Authroutes.js"
 
 const clientUri = process.env.CLIENTURI;
 if (!clientUri) {
@@ -29,6 +30,7 @@ app.get("/" , (_req, res) => {
 })
 
 app.use("/user" , Authroutes)
+app.use("/gig" , Gigrotes)
 
 app.listen(PORT,()=>{
     console.log(`App is running on ${PORT}`)

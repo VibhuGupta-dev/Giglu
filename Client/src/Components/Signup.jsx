@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export function Signup({ onSwitch }) {
   const [name, setName] = useState("");
@@ -9,7 +10,7 @@ export function Signup({ onSwitch }) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const navigate = useNavigate()
   async function signup(event) {
     event.preventDefault();
     setError("");
@@ -23,6 +24,9 @@ export function Signup({ onSwitch }) {
         { withCredentials: true },
       );
       setSuccess(response.data?.message ?? "Your account is ready.");
+      if(response.status == 201) {
+        navigate("/Dashboard")
+      }
     } catch (err) {
       const responseMessage = axios.isAxiosError(err)
         ? err.response?.data?.message

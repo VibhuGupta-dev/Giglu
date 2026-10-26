@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function Signin({ onCreateAccount }) {
 
+    const navigate = useNavigate()
     const [email , setEmail] = useState("")
     const [password , setPassword] = useState("")
     const [error , setError] = useState("")
@@ -20,6 +22,9 @@ export function Signin({ onCreateAccount }) {
                 { withCredentials: true },
             )
             setMessage(res.data.message)
+            if (res.status === 200) {
+              navigate("/Dashboard")
+            }
         }catch(err) {
             const responseMessage = axios.isAxiosError(err)
                 ? err.response?.data?.message
@@ -55,10 +60,11 @@ export function Signin({ onCreateAccount }) {
           autoComplete="current-password"
         />
         <h4>{message}</h4>
-        <h4>{error}</h4>
+       
         <button className="button auth-submit" type="submit">
           Sign in <span aria-hidden="true">↗</span>
         </button>
+         <h5>{error}</h5>
       </form>
       <p className="auth-switch">
         New to the neighborhood? <button onClick={onCreateAccount} type="button">Create an account</button>
