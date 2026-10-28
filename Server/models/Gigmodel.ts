@@ -6,6 +6,7 @@ export interface Giginterface {
     GigDescription: string;
     GigPrice: number;
     GigLocation: number;
+ 
     Time: Date;
     ExpireDateAndTime: Date;
     IsActive: boolean;
@@ -32,6 +33,7 @@ const gigSchema = new mongoose.Schema<Giginterface>({
         type: Number,
         required: true,
     },
+    
     Time: {
         type: Date,
         default: Date.now,

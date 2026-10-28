@@ -6,6 +6,8 @@ export interface User {
     password?: string
     googleId?: string
     image?: string
+    contact : Number
+    isContact : boolean
     isprofile: boolean
     createdAt: Date
     updatedAt?: Date
@@ -33,6 +35,14 @@ const userSchema = new mongoose.Schema<User>({
     isprofile:{
         type:Boolean,
         default:false,
+    },
+    contact : {
+        type : Number,
+        required : false
+    },
+    isContact : {
+        type : Boolean,
+        default : false
     },
     createdAt:{
         type:Date,

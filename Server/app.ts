@@ -5,7 +5,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import connectDB from "./config/MongoConnect.js"
 import Authroutes from "./routes/Authroutes.js"
-import Gigrotes from "./routes/Authroutes.js"
+import Gigrotes from "./routes/Gigroutes.js"
 
 const clientUri = process.env.CLIENTURI;
 if (!clientUri) {
